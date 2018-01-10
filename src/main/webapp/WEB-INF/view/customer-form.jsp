@@ -24,6 +24,12 @@
 <div id="container">
     <h3>Save Customer</h3>
     <form:form action="saveCustomer" modelAttribute="customer" method="post">
+        <%-- need to assotiate the data of "customer" with given customer id (when we update the customer,
+        we need to work with given customer and do not create the new one). As we HAVEN'T FORM INPUT for id,
+        every time we push "Save" button we create new id and therefore new customer. To bind given customer
+        with it's id, this can be done with "hidden" --%>
+        <form:hidden path="id"/>
+
         <table>
             <tbody>
             <tr>

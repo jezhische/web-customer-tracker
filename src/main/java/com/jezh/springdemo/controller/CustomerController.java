@@ -39,6 +39,7 @@ public class CustomerController {
 // его в бд
     @PostMapping("/saveCustomer")
     public String saveC(@ModelAttribute("customer")Customer customer) {
+        // here we have "saveOrUpdate()" method in CustomerDAOImpl
         customerService.saveCustomer(customer);
         return "redirect:/customer/list";
     }

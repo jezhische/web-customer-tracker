@@ -44,13 +44,16 @@
                 <c:url var="updateLink" value="/customer/showFormForUpdate">
                     <c:param name="customerId" value="${tempCustomer.id}"/>
                 </c:url>
+                <c:url var="deleteLink" value="/">
+                    <c:param name="customerId" value="${tempCustomer.id}"/>
+                </c:url>
                 <tr>
                     <td>${tempCustomer.id}</td>
                     <td>${tempCustomer.firstName}</td>
                     <td>${tempCustomer.lastName}</td>
                     <td>${tempCustomer.email}</td>
                     <%-- создаем ссылку, у которой URL = /customer/showFormForUpdate  --%>
-                    <td><a href="${updateLink}">Update</a> </td>
+                    <td><a href="${updateLink}">Update</a> | <a href="${deleteLink}">Delete</a> </td>
                 </tr>
             </c:forEach>
         </table>
