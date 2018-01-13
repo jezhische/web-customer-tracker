@@ -1,13 +1,14 @@
 package com.jezh.springdemo.controller;
 
-import com.jezh.springdemo.dao.CustomerDAO;
 import com.jezh.springdemo.entity.Customer;
 import com.jezh.springdemo.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -38,12 +39,16 @@ public class CustomerController {
 // Здесь обращаемся к атрибуту модели customer, поля которого заполнены на странице customer-form, и сохраняем
 // его в бд
     @PostMapping("/saveCustomer")
-    public String saveC(@ModelAttribute("customer")Customer customer) {
-        // here we have "saveOrUpdate()" method in CustomerDAOImpl
-        customerService.saveCustomer(customer);
-        return "redirect:/customer/list";
+    public String saveC(@Valid @ModelAttribute("customer")Customer customer, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            System.out.println(">>>> " + bindingResult);
+            return "customer-form";
+        } else {
+            // here we have "saveOrUpdate()" method in CustomerDAOImpl
+            customerService.saveCustomer(customer);
+            return "redirect:/customer/list";
+        }
     }
-
 //    RequestParam - это customerId=5 в запросе http://localhost:8084/hb/customer/showFormForUpdate?customerId=5
     @GetMapping("/showFormForUpdate")
     public String showFormForUpdate(@RequestParam("customerId") int theId, Model model) {
@@ -52,6 +57,20 @@ public class CustomerController {
         model.addAttribute("customer", currentCustomer);
         return "customer-form";
     } // STOPSHIP: 09.01.2018
+
+    @GetMapping("/delete")
+    public String deleteCustomer(@RequestParam("customerId") int theId, Model model) {
+//        Customer currentCustomer = customerService.getCustomerById(theId);
+        customerService.deleteCustomerById(theId);
+        return "redirect:/customer/list";
+    }
+
+    @PostMapping("/search")
+    public String searchCustomers(@RequestParam("theSearchName") String theSearchName, Model model) {
+        List<Customer> customers = customerService.searchCustomersByPartialMatchInNames(theSearchName);
+        model.addAttribute("customers", customers);
+        return "list-customers";
+    }
 
 //    @GetMapping("/test")
 //    public String showTest() {

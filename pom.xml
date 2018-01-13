@@ -25,6 +25,7 @@
         <org.postgresql.version>42.1.1</org.postgresql.version>
         <h2.version>1.4.196</h2.version>
         <commons-lang3.version>3.7</commons-lang3.version>
+        <aspectj.version>1.8.9</aspectj.version>
         <maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
         <tomcat7.maven.plugin.version>2.2</tomcat7.maven.plugin.version>
     </properties>
@@ -78,6 +79,13 @@
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-aop -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -124,6 +132,7 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${org.postgresql.version}</version>
+            <!--<scope>runtime</scope>-->
         </dependency>
         <!--TO CREATE CONNECTION POOL:-->
         <!-- https://mvnrepository.com/artifact/com.mchange/c3p0 -->
@@ -131,6 +140,12 @@
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
             <version>0.9.5.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
         </dependency>
 
     </dependencies>

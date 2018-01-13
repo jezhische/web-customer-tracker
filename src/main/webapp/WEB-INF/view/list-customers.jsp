@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <%--<!DOCTYPE html>--%>
 <html>
@@ -28,6 +29,12 @@
                onclick="window.location.href='showFormForAdd'; return false;"
                class="add-button"
         />     <!-- APPLYING CSS STYLES: add-button is the class .add-button in style.css -->
+        <%-- add a search box --%>
+        <form:form action="search" method="post">
+            Search customer: <input type="text" name="theSearchName"/>
+            <input type="submit" value="Search" class="add-button"/>
+        </form:form>
+
         <!-- add html table here -->
         <table>
             <tr>
@@ -39,12 +46,14 @@
             </tr>
             <%-- loop over and print customers --%>
             <c:forEach var="tempCustomer" items="${customers}">
-                <%-- NB: создаем линк "update" для каждого tempCustomer во время итерации --%>
-                <%-- construct an "update" link with customer id - create a new var witn appropriate value --%>
+                <%-- NB: создаем переменные, которые обеспечат линк для "update" и "delete" для каждого tempCustomer
+                во время итерации --%>
+                <%-- construct an "update" link with customer id - create a new var witn appropriate url value, and
+                add a value of id param --%>
                 <c:url var="updateLink" value="/customer/showFormForUpdate">
                     <c:param name="customerId" value="${tempCustomer.id}"/>
                 </c:url>
-                <c:url var="deleteLink" value="/">
+                <c:url var="deleteLink" value="/customer/delete">
                     <c:param name="customerId" value="${tempCustomer.id}"/>
                 </c:url>
                 <tr>
@@ -52,8 +61,12 @@
                     <td>${tempCustomer.firstName}</td>
                     <td>${tempCustomer.lastName}</td>
                     <td>${tempCustomer.email}</td>
-                    <%-- создаем ссылку, у которой URL = /customer/showFormForUpdate  --%>
-                    <td><a href="${updateLink}">Update</a> | <a href="${deleteLink}">Delete</a> </td>
+                    <%-- создаем ссылку, у которой URL = /customer/showFormForUpdate для Update и соотв. для Delete;
+                     NB: для delete работает javascript--%>
+                    <td><a href="${updateLink}">Update</a> | <a href="${deleteLink}"
+                    onclick="if (!(confirm('Are you sure you want to delete this customer?'))) return false;">
+                        Delete</a>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

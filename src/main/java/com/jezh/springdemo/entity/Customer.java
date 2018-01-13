@@ -1,6 +1,8 @@
 package com.jezh.springdemo.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -12,9 +14,13 @@ public class Customer {
     @Column
     private int id;
 
+    @NotNull(message = "is required")
+    @Size(min = 1, message = "this field filling is required")
     @Column(name = "first_name")
     private String firstName;
 
+    @NotNull(message = "is required")
+    @Size(min = 2, message = "min 2 characters are required")
     @Column(name = "last_name")
     private String lastName;
 

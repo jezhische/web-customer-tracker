@@ -11,4 +11,8 @@ public interface CustomerDAO {
 
 
     Customer getCustomerById(int id);
+
+    void deleteCustomerById(int id);
+
+    List<Customer> searchCustomersByPartialMatchInNames(String theSearchName);
 }

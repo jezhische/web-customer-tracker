@@ -10,4 +10,8 @@ public interface CustomerService {
     void saveCustomer(Customer customer);
 
     Customer getCustomerById(int id);
+
+    void deleteCustomerById(int id);
+
+    List<Customer> searchCustomersByPartialMatchInNames(String theSearchName);
 }

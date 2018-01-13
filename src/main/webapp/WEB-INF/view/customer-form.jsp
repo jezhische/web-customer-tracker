@@ -7,12 +7,22 @@
 --%>
 <%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sping" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Save Customer</title>
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <%--<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">--%>
+    <%-- NB: todo: для spring переменной НЕ НУЖНО прописывать начало абсолютного пути как ${pageContext.request.contextPath},
+     а для обычной ссылки (на две строчки ниже) - нужно. Видимо, ${} - это чисто jsp-шный прикол --%>
+    <sping:url value="/css/style.css" var="css"/>
+    <link href="${css}" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/add-customer-style.css">
+    <style>
+        .error {color: red}
+    </style>
 </head>
 <body>
 <div id="wrapper">
@@ -33,12 +43,19 @@
         <table>
             <tbody>
             <tr>
-                <td><label>First name:</label></td>
-                <td><form:input path="firstName"/></td>
+                <td><label>First name*:</label></td>
+                <td>
+                    <form:input path="firstName"/>
+                    <%-- for validation - see annotation in Customer and CustomerController method saveCustomer() --%>
+                    <form:errors path="firstName" cssClass="error"/>
+                </td>
             </tr>
             <tr>
-                <td><label>Last name:</label></td>
-                <td><form:input path="lastName"/></td>
+                <td><label>Last name*:</label></td>
+                <td>
+                    <form:input path="lastName"/>
+                    <form:errors path="lastName" cssClass="error"/>
+                </td>
             </tr>
             <tr>
                 <td><label>Email:</label></td>

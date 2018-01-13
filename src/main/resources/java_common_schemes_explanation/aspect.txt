@@ -1,0 +1,14 @@
+
+aspect:
+
+@Before("execution(public void addAccount())")
+public void beforeAddAccountAdvice() {
+    .......
+}
+
+Здесь:
+@Before = advice
+"execution(public void addAccount())" = pointcut
+
+Внедряем (weave) перед конкретным методом addAccount() в конкретном классе - это будет join point. При этом (компилятор)
+сверяется со срезом (pointcut): подходит ли этот аспект для данной join point? Если да - все ok.
